@@ -55,10 +55,10 @@ const CTA = () => {
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm mb-8">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-sm font-medium tracking-wider">NO OBLIGATION • FREE STRATEGY SESSION</span>
+                <span className="text-sm font-medium tracking-wider text-white">NO OBLIGATION • FREE STRATEGY SESSION</span>
               </div>
               
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8">
+              <h2 className="text-5xl md:text-6xl text-gray-500 lg:text-7xl font-bold mb-8">
                 Your{' '}
                 <span className="relative inline-block">
                   <span className="text-white">destiny</span>
@@ -100,7 +100,7 @@ const CTA = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your.email@company.com"
+                        placeholder="hello@scalewithdestiny.com"
                         className="flex-1 px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-white/30 focus:bg-white/10 transition-colors"
                         required
                       />
@@ -123,11 +123,11 @@ const CTA = () => {
                 <div className="text-center mb-10">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 border border-gray-800 mb-6">
                     <span className="text-yellow-400">★</span>
-                    <span className="text-sm font-medium">Most Popular</span>
+                    <span className="text-sm font-medium text-white">Most Popular</span>
                   </div>
-                  <h3 className="text-3xl font-bold mb-4">Free Strategy Session</h3>
+                  <h3 className="text-3xl font-bold mb-4 text-gray-100">Free Strategy Session</h3>
                   <div className="flex items-baseline justify-center gap-2 mb-6">
-                    <span className="text-5xl font-bold">$0</span>
+                    <span className="text-5xl font-bold text-gray-600">$0</span>
                     <span className="text-gray-400">/session</span>
                   </div>
                   <p className="text-gray-300 mb-8">
@@ -152,14 +152,14 @@ const CTA = () => {
                     <p className="text-sm text-gray-400 mb-4">Or choose a different option:</p>
                     <div className="flex flex-col sm:flex-row gap-3">
                       <Link
-                        href="/process"
-                        className="flex-1 py-3 px-6 border border-gray-700 rounded-xl text-center font-medium hover:border-gray-600 hover:bg-white/5 transition-colors"
+                        href="#process"
+                        className="flex-1 py-3 text-white px-6 border border-gray-700 rounded-xl text-center font-medium hover:border-gray-600 hover:bg-white/5 transition-colors"
                       >
-                        See Full Process
+                        See Process
                       </Link>
                       <Link
-                        href="/work"
-                        className="flex-1 py-3 px-6 border border-gray-700 rounded-xl text-center font-medium hover:border-gray-600 hover:bg-white/5 transition-colors"
+                        href="#work"
+                        className="flex-1 py-3 px-6 text-white border border-gray-700 rounded-xl text-center font-medium hover:border-gray-600 hover:bg-white/5 transition-colors"
                       >
                         View Case Studies
                       </Link>
@@ -197,8 +197,8 @@ const CTA = () => {
                   }`}
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
-                  <div className="text-3xl md:text-4xl font-bold mb-2">{stat.value}</div>
-                  <div className="text-lg font-semibold mb-2">{stat.label}</div>
+                  <div className="text-3xl md:text-4xl font-bold mb-2 text-white">{stat.value}</div>
+                  <div className="text-lg font-semibold mb-2 text-gray-300">{stat.label}</div>
                   <div className="text-sm text-gray-400">{stat.description}</div>
                 </div>
               ))}

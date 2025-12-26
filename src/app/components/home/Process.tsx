@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
+import { SiCssdesignawards } from "react-icons/si";
+import { MdBuildCircle } from "react-icons/md";
+import { FaArrowTrendUp } from "react-icons/fa6";
+
 const Process = () => {
   const [activePhase, setActivePhase] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
@@ -22,7 +26,7 @@ const Process = () => {
         'User Journey Mapping',
         'Feature Prioritization Matrix'
       ],
-      icon: '🎯',
+      icon: <SiCssdesignawards size={26}/>,
       timeline: '2-3 weeks'
     },
     {
@@ -35,7 +39,7 @@ const Process = () => {
         'Automated Testing & QA',
         'Performance Optimization'
       ],
-      icon: '⚡',
+      icon: <MdBuildCircle size={26}/>,
       timeline: '6-8 weeks'
     },
     {
@@ -48,7 +52,7 @@ const Process = () => {
         'Launch Playbook Creation',
         'Growth Metrics & Analytics'
       ],
-      icon: '📈',
+      icon: <FaArrowTrendUp size={26}/>,
       timeline: '2-3 weeks'
     }
   ]
@@ -77,7 +81,7 @@ const Process = () => {
               <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm hover:shadow-md transition-shadow h-full">
                 {/* Phase Number & Icon */}
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-5xl font-bold text-gray-100">{phase.number}</span>
+                  <span className="text-5xl font-bold text-gray-500">{phase.number}</span>
                   <span className="text-3xl">{phase.icon}</span>
                 </div>
 
@@ -117,7 +121,7 @@ const Process = () => {
               Book a free strategy session where we'll map out your product's first 90 days.
             </p>
             <Link
-              href="/start"
+              href="/contact"
               className="inline-flex items-center justify-center rounded-full bg-black px-8 py-3 text-base font-medium text-white hover:bg-gray-800 transition-colors"
             >
               Begin Your Journey

@@ -1,19 +1,20 @@
 import Link from 'next/link'
+import { FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaInstagramSquare } from "react-icons/fa";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
   
   const footerLinks = {
     Services: [
-      { label: 'MVP Design', href: '/services/design' },
-      { label: 'Development', href: '/services/development' },
-      { label: 'Market Strategy', href: '/services/strategy' },
-      { label: 'Pricing', href: '/pricing' },
+      { label: 'MVP Design', href: '#' },
+      { label: 'Development', href: '#' },
+      { label: 'Market Strategy', href: '#' },
     ],
     Company: [
-      { label: 'Our Process', href: '/process' },
-      { label: 'Case Studies', href: '/work' },
-      { label: 'Insights', href: '/insights' },
+      { label: 'Our Process', href: '#process' },
+      { label: 'Case Studies', href: '#work' },
+      { label: 'Insights', href: '#insights' },
       { label: 'Contact', href: '/contact' },
     ],
     Legal: [
@@ -24,9 +25,9 @@ const Footer = () => {
   }
 
   const socialLinks = [
-    { name: 'Twitter', href: 'https://twitter.com/scalewithdestiny', icon: '𝕏' },
-    { name: 'LinkedIn', href: 'https://linkedin.com/company/scalewithdestiny', icon: 'in' },
-    { name: 'Instagram', href: 'https://github.com/scalewithdestiny', icon: '⎋' },
+    { name: 'Twitter', href: 'https://twitter.com/scalewithdestiny', icon: <FaXTwitter size={20}/> },
+    { name: 'LinkedIn', href: 'https://linkedin.com/company/scalewithdestiny', icon: <FaLinkedin size={20}/> },
+    { name: 'Instagram', href: 'https://instagram.com/scalewithdestiny', icon: <FaInstagramSquare size={20}/> },
   ]
 
   return (
