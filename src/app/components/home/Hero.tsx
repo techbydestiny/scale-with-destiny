@@ -1,9 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 
-const Hero = () => {
+const Hero = ({ onStartMVP }: { onStartMVP: () => void }) => {
   const [loaded, setLoaded] = useState(false)
   const [currentMetric, setCurrentMetric] = useState(0)
   const [currentTagline, setCurrentTagline] = useState(0)
@@ -47,6 +46,11 @@ const Hero = () => {
     'Your dedicated partner for product-market fit.',
     'Strategy, design, development, and launch—handled.'
   ]
+
+  const scrollToProcess = (e: React.MouseEvent) => {
+    e.preventDefault()
+    document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <section className="relative overflow-hidden min-h-[90vh] flex items-center">
@@ -130,8 +134,8 @@ const Hero = () => {
           <div className={`flex flex-col sm:flex-row gap-4 mb-16 transition-all duration-1000 delay-500 ${
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
           }`}>
-            <Link
-              href="/start"
+            <button
+              onClick={onStartMVP}
               className="group relative inline-flex items-center justify-center rounded-full bg-black px-8 py-4 text-base font-medium text-white overflow-hidden transition-all duration-300 hover:scale-[1.02]"
             >
               <span className="relative z-10 flex items-center">
@@ -146,15 +150,16 @@ const Hero = () => {
                 </svg>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </Link>
+            </button>
             
             <div className="relative">
-              <Link
-                href="/process"
+              <a
+                href="#process"
+                onClick={scrollToProcess}
                 className="inline-flex items-center justify-center rounded-full border-2 border-gray-300 px-8 py-4 text-base font-medium text-gray-700 hover:border-gray-400 hover:text-black transition-all duration-300 hover:shadow-sm"
               >
                 See Our Process
-              </Link>
+              </a>
               <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 whitespace-nowrap">
                 Free strategy call included
               </span>

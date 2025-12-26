@@ -26,11 +26,11 @@ const Footer = () => {
   const socialLinks = [
     { name: 'Twitter', href: 'https://twitter.com/scalewithdestiny', icon: '𝕏' },
     { name: 'LinkedIn', href: 'https://linkedin.com/company/scalewithdestiny', icon: 'in' },
-    { name: 'GitHub', href: 'https://github.com/scalewithdestiny', icon: '⎋' },
+    { name: 'Instagram', href: 'https://github.com/scalewithdestiny', icon: '⎋' },
   ]
 
   return (
-    <footer className="border-t border-gray-100 bg-white">
+    <footer id='insights' className="border-t border-gray-100 bg-white">
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           {/* Brand Column */}
