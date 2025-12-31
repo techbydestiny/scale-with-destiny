@@ -121,7 +121,7 @@ export default function Header() {
   )
 }
 
-// Start MVP Modal Component
+// Start MVP Modal Component - UPDATED TO SEND TO EMAIL
 const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -130,7 +130,7 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
     idea: '',
     budget: '',
     timeline: '',
-    contactMethod: 'email', // Default contact method
+    contactMethod: 'email',
     whatsappNumber: '',
     instagram: '',
     twitter: '',
@@ -145,16 +145,48 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
     setIsSubmitting(true)
 
     try {
-      // Here you would connect to your backend/email service
-      // For now, we'll just log and simulate success
-      console.log('Form submitted:', formData)
+      // Prepare email content
+      const emailSubject = `New MVP Inquiry from ${formData.name} - ${formData.company || 'No Company'}`
+
+      const emailBody = `
+NEW MVP INQUIRY - SCALE WITH DESTINY
+
+CONTACT INFORMATION:
+• Name: ${formData.name}
+• Email: ${formData.email}
+• Company/Project: ${formData.company || 'Not provided'}
+
+PROJECT DETAILS:
+• Idea: ${formData.idea}
+• Budget Range: ${formData.budget || 'Not specified'}
+• Timeline: ${formData.timeline || 'Not specified'}
+
+CONTACT PREFERENCES:
+• Preferred Method: ${formData.contactMethod.toUpperCase()}
+${formData.contactMethod === 'whatsapp' ? `• WhatsApp: ${formData.whatsappNumber}` : ''}
+${formData.contactMethod === 'instagram' ? `• Instagram: ${formData.instagram}` : ''}
+${formData.contactMethod === 'twitter' ? `• Twitter/X: ${formData.twitter}` : ''}
+
+ADDITIONAL MESSAGE:
+${formData.message || 'No additional message'}
+
+TIMESTAMP: ${new Date().toLocaleString()}
+---
+Submitted via Scale with Destiny Website
+      `.trim()
+
+      // YOUR EMAIL - UPDATE THIS
+      const recipientEmail = 'hello.scalewithdestiny@gmail.com'
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      // Create mailto link
+      const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+      
+      // Open user's email client
+      window.location.href = mailtoLink
       
       setIsSubmitted(true)
       
-      // Reset form after 3 seconds
+      // Reset form and close after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false)
         setFormData({
@@ -171,10 +203,10 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
           message: ''
         })
         onClose()
-      }, 3000)
+      }, 5000)
 
     } catch (error) {
-      console.error('Error submitting form:', error)
+      console.error('Error:', error)
     } finally {
       setIsSubmitting(false)
     }
@@ -215,7 +247,7 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
           </button>
         </div>
 
-        {/* Success Message */}
+        {/* Success Message - UPDATED */}
         {isSubmitted ? (
           <div className="p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
@@ -223,12 +255,15 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4">Thank You!</h3>
+            <h3 className="text-2xl font-bold mb-4">Check Your Email!</h3>
+            <p className="text-gray-600 mb-4">
+              We've opened your email client with a pre-filled message.
+            </p>
             <p className="text-gray-600 mb-6">
-              We've received your information and will reach out to you within 24 hours via your preferred method.
+              Just hit <strong>"Send"</strong> to submit your inquiry to us.
             </p>
             <div className="animate-pulse text-sm text-gray-500">
-              Closing in 3 seconds...
+              This window will close in 5 seconds...
             </div>
           </div>
         ) : (
@@ -437,7 +472,7 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
               </div>
             </div>
 
-            {/* Form Actions */}
+            {/* Form Actions - UPDATED BUTTON TEXT */}
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 type="submit"
@@ -450,10 +485,10 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Submitting...
+                    Opening Email...
                   </span>
                 ) : (
-                  'Submit & Start Conversation'
+                  'Open Email & Send Inquiry'
                 )}
               </button>
               <button
@@ -465,10 +500,17 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
               </button>
             </div>
 
-            {/* Privacy Notice */}
-            <p className="mt-6 text-xs text-gray-500 text-center">
-              By submitting this form, you agree to our Privacy Policy. We'll never share your information without permission.
-            </p>
+            {/* Privacy Notice - UPDATED */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-xl">
+              <p className="text-xs text-gray-600 text-center">
+                <strong>How this works:</strong> When you click submit, we'll open your email client with a pre-filled message. 
+                Just hit "Send" to submit your inquiry to us. We'll respond within 24 hours.
+                <br />
+                <span className="block mt-1">
+                  By submitting this form, you agree to our Privacy Policy. We'll never share your information.
+                </span>
+              </p>
+            </div>
           </form>
         )}
       </div>

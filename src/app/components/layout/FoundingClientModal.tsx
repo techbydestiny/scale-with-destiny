@@ -1,102 +1,100 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-interface StartMVPModalProps {
+interface FoundingClientModalProps {
   onClose: () => void
-  initialData?: {
-    projectType?: string
-    category?: string
-    isFoundingClient?: boolean
-  }
 }
 
-const StartMVPModal = ({ onClose, initialData }: StartMVPModalProps) => {
+const FoundingClientModal = ({ onClose }: FoundingClientModalProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
-    idea: '',
-    budget: '',
+    projectIdea: '',
     timeline: '',
-    contactMethod: 'email',
-    whatsappNumber: '',
+    currentStage: '',
+    funding: '',
     message: '',
-    heardAboutUs: ''
+    contactMethod: 'email'
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  useEffect(() => {
-    if (initialData?.projectType) {
-      setFormData(prev => ({
-        ...prev,
-        idea: `I'm interested in building: ${initialData.projectType}`,
-      }))
-    }
-  }, [initialData])
+  const benefits = [
+    '30% off standard rates (limited time)',
+    'Priority access to our founding team',
+    'Extended 90-day post-launch support',
+    'Featured case study on our website',
+    'Direct access to agency founder',
+    'Co-marketing opportunities'
+  ]
+
+  const currentStageOptions = [
+    'Idea stage (just starting)',
+    'Validation stage (testing idea)',
+    'Ready to build (validated idea)',
+    'Seeking investors',
+    'Post-MVP scaling'
+  ]
+
+  const fundingOptions = [
+    'Bootstrapped',
+    'Friends & Family',
+    'Angel investment',
+    'Pre-seed funding',
+    'Seed funding',
+    'Not funded yet'
+  ]
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     try {
-      // Prepare email content
-      const emailSubject = `New MVP Inquiry: ${formData.company || formData.name}`
+      const recipientEmail = 'your-email@gmail.com' // CHANGE TO YOUR EMAIL
+      const emailSubject = `Founding Client Application: ${formData.company || formData.name}`
       
       const emailBody = `
-NEW MVP INQUIRY
+🎯 FOUNDING CLIENT APPLICATION
 
-CONTACT INFORMATION:
+APPLICANT INFORMATION:
 • Name: ${formData.name}
 • Email: ${formData.email}
-• Company/Project: ${formData.company || 'Not provided'}
+• Company: ${formData.company || 'Not provided'}
 
 PROJECT DETAILS:
-• Idea: ${formData.idea}
-• Budget Range: ${formData.budget || 'Not specified'}
-• Timeline: ${formData.timeline || 'Not specified'}
+• Project Idea: ${formData.projectIdea}
+• Current Stage: ${formData.currentStage}
+• Funding Status: ${formData.funding}
+• Preferred Timeline: ${formData.timeline}
 
-CONTACT PREFERENCES:
-• Preferred Method: ${formData.contactMethod.toUpperCase()}
-${formData.contactMethod === 'whatsapp' ? `• WhatsApp: ${formData.whatsappNumber}` : ''}
+CONTACT PREFERENCE:
+• Method: ${formData.contactMethod}
 
-ADDITIONAL INFO:
-• Heard About Us: ${formData.heardAboutUs || 'Not specified'}
-
-MESSAGE:
+ADDITIONAL MESSAGE:
 ${formData.message || 'No additional message'}
 
 TIMESTAMP: ${new Date().toLocaleString()}
 ---
-Scale with Destiny MVP Inquiry
+FOUNDING CLIENT BENEFITS REQUESTED:
+• 30% discounted rate
+• Priority access & support
+• Featured case study
+• Founder-level partnership
+
+Sent via Scale with Destiny Founding Client Application
       `.trim()
 
-      // Create mailto link with YOUR EMAIL
-      const recipientEmail = 'hello.scalewithdestiny@gmail.com'
       const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
       
-      // Open user's email client
       window.location.href = mailtoLink
       
       setIsSubmitted(true)
       
-      // Reset form and close after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false)
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          idea: '',
-          budget: '',
-          timeline: '',
-          contactMethod: 'email',
-          whatsappNumber: '',
-          message: '',
-          heardAboutUs: ''
-        })
         onClose()
       }, 5000)
 
@@ -115,39 +113,49 @@ Scale with Destiny MVP Inquiry
     }))
   }
 
-  const contactMethods = [
-    { id: 'email', label: 'Email', icon: '✉️' },
-    { id: 'whatsapp', label: 'WhatsApp', icon: '💬' }
-  ]
-
-  const heardAboutUsOptions = [
-    'Google Search',
-    'LinkedIn',
-    'Twitter/X',
-    'Instagram',
-    'Referral',
-    'YouTube',
-    'Other'
-  ]
-
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <div className="relative bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold">Start Your MVP Journey</h2>
-            <p className="text-gray-600 text-sm">Tell us about your idea</p>
+        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h2 className="text-2xl font-bold">Become a Founding Client</h2>
+              <div className="inline-flex items-center gap-2 mt-1">
+                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">
+                  LIMITED SPOTS
+                </span>
+                <span className="text-sm text-gray-600">3 spots remaining</span>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100"
+              aria-label="Close modal"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100"
-            aria-label="Close modal"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+          <p className="text-gray-600 text-sm mt-2">
+            Apply for exclusive founding client benefits and rates
+          </p>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="p-6 bg-gradient-to-r from-yellow-50 to-amber-50 border-b border-yellow-200">
+          <h3 className="font-bold text-lg mb-3">🎁 Founding Client Benefits</h3>
+          <ul className="space-y-2">
+            {benefits.map((benefit, index) => (
+              <li key={index} className="flex items-start">
+                <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm text-gray-800">{benefit}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Success Message */}
@@ -158,22 +166,21 @@ Scale with Destiny MVP Inquiry
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4">Check Your Email!</h3>
+            <h3 className="text-2xl font-bold mb-4">Application Sent!</h3>
             <p className="text-gray-600 mb-4">
-              We've opened your email client with a pre-filled message.
+              We've opened your email client with your founding client application.
             </p>
             <p className="text-gray-600 mb-6">
-              Just hit <strong>"Send"</strong> to submit your inquiry to us.
+              Just hit <strong>"Send"</strong> and we'll review your application within 24 hours.
             </p>
             <div className="animate-pulse text-sm text-gray-500">
-              This window will close in 5 seconds...
+              Closing in 5 seconds...
             </div>
           </div>
         ) : (
-          /* Form */
           <form onSubmit={handleSubmit} className="p-6">
             <div className="space-y-6">
-              {/* Basic Information */}
+              {/* Basic Info */}
               <div className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -190,9 +197,10 @@ Scale with Destiny MVP Inquiry
                       placeholder="John Doe"
                     />
                   </div>
+                  
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                      Email *
                     </label>
                     <input
                       type="email"
@@ -208,105 +216,100 @@ Scale with Destiny MVP Inquiry
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Company/Project Name
+                    Company/Project Name *
                   </label>
                   <input
                     type="text"
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                    placeholder="Startup Name"
+                    placeholder="Your Startup"
+                  />
+                </div>
+              </div>
+
+              {/* Project Details */}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tell us about your project idea *
+                  </label>
+                  <textarea
+                    name="projectIdea"
+                    value={formData.projectIdea}
+                    onChange={handleChange}
+                    required
+                    rows={3}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                    placeholder="Describe your MVP idea, target users, and problem you're solving..."
                   />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Budget Range
+                      Current Stage *
                     </label>
                     <select
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                    >
-                      <option value="">Select budget</option>
-                      <option value="$5k-10k">$5,000 - $10,000</option>
-                      <option value="$10k-25k">$10,000 - $25,000</option>
-                      <option value="$25k-50k">$25,000 - $50,000</option>
-                      <option value="$50k+">$50,000+</option>
-                      <option value="not-sure">Not sure yet</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Timeline
-                    </label>
-                    <select
-                      name="timeline"
-                      value={formData.timeline}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                    >
-                      <option value="">Select timeline</option>
-                      <option value="ASAP">ASAP (Within 1 month)</option>
-                      <option value="1-2 months">1-2 months</option>
-                      <option value="2-3 months">2-3 months</option>
-                      <option value="3+ months">3+ months</option>
-                      <option value="flexible">Flexible</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Project Details */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Project Details</h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Tell us about your idea *
-                    </label>
-                    <textarea
-                      name="idea"
-                      value={formData.idea}
+                      name="currentStage"
+                      value={formData.currentStage}
                       onChange={handleChange}
                       required
-                      rows={3}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="Describe your MVP idea, target users, and what problem it solves..."
-                    />
+                    >
+                      <option value="">Select stage</option>
+                      {currentStageOptions.map(option => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
                   </div>
                   
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      How did you hear about us?
+                      Funding Status *
                     </label>
                     <select
-                      name="heardAboutUs"
-                      value={formData.heardAboutUs}
+                      name="funding"
+                      value={formData.funding}
                       onChange={handleChange}
+                      required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
                     >
-                      <option value="">Select option</option>
-                      {heardAboutUsOptions.map(option => (
+                      <option value="">Select status</option>
+                      {fundingOptions.map(option => (
                         <option key={option} value={option}>{option}</option>
                       ))}
                     </select>
                   </div>
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Preferred Timeline *
+                  </label>
+                  <input
+                    type="text"
+                    name="timeline"
+                    value={formData.timeline}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                    placeholder="e.g., 3 months, ASAP, flexible"
+                  />
+                </div>
               </div>
 
-              {/* Contact Preference */}
+              {/* Contact Method */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">Contact Preference</h3>
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  {contactMethods.map((method) => (
+                <h3 className="text-lg font-semibold mb-3">How should we contact you? *</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {['email', 'whatsapp'].map((method) => (
                     <label
-                      key={method.id}
+                      key={method}
                       className={`flex items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all ${
-                        formData.contactMethod === method.id
+                        formData.contactMethod === method
                           ? 'border-black bg-black text-white'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
@@ -314,41 +317,22 @@ Scale with Destiny MVP Inquiry
                       <input
                         type="radio"
                         name="contactMethod"
-                        value={method.id}
-                        checked={formData.contactMethod === method.id}
+                        value={method}
+                        checked={formData.contactMethod === method}
                         onChange={handleChange}
                         className="sr-only"
                         required
                       />
-                      <span className="mr-2">{method.icon}</span>
-                      <span>{method.label}</span>
+                      <span className="capitalize">{method}</span>
                     </label>
                   ))}
                 </div>
-
-                {/* WhatsApp Number Field */}
-                {formData.contactMethod === 'whatsapp' && (
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      WhatsApp Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="whatsappNumber"
-                      value={formData.whatsappNumber}
-                      onChange={handleChange}
-                      required={formData.contactMethod === 'whatsapp'}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="+1 (555) 123-4567"
-                    />
-                  </div>
-                )}
               </div>
 
               {/* Additional Message */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Message
+                  Why should we choose you as a founding client?
                 </label>
                 <textarea
                   name="message"
@@ -356,7 +340,7 @@ Scale with Destiny MVP Inquiry
                   onChange={handleChange}
                   rows={3}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                  placeholder="Questions, concerns, or additional details..."
+                  placeholder="Tell us about your vision, team, or what makes your project special..."
                 />
               </div>
             </div>
@@ -366,7 +350,7 @@ Scale with Destiny MVP Inquiry
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-4 bg-gradient-to-r from-yellow-500 to-amber-500 text-white font-semibold rounded-xl hover:from-yellow-600 hover:to-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -374,10 +358,10 @@ Scale with Destiny MVP Inquiry
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Preparing Email...
+                    Submitting Application...
                   </span>
                 ) : (
-                  'Send Inquiry via Email'
+                  'Apply for Founding Client Spot'
                 )}
               </button>
               
@@ -390,10 +374,12 @@ Scale with Destiny MVP Inquiry
               </button>
             </div>
 
-            {/* Privacy Notice */}
+            {/* Terms */}
             <div className="mt-6 text-center">
               <p className="text-xs text-gray-500">
-                Your information is secure. We'll respond within 24 hours.
+                Applications reviewed within 24 hours. Limited to 3 founding client spots.
+                <br />
+                By applying, you agree to our terms and privacy policy.
               </p>
             </div>
           </form>
@@ -403,4 +389,4 @@ Scale with Destiny MVP Inquiry
   )
 }
 
-export default StartMVPModal
+export default FoundingClientModal

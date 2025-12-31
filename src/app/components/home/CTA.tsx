@@ -138,7 +138,7 @@ const CTA = () => {
                 {/* Calendar CTA */}
                 <div className="space-y-6">
                   <Link
-                    href="https://cal.com/scalewithdestiny/strategy"
+                    href="https://cal.com/scale-with-destiny-ic2pbw/strategy"
                     target="_blank"
                     className="block w-full py-4 px-6 bg-gradient-to-r from-white to-gray-200 text-black font-bold text-center rounded-xl hover:from-gray-100 hover:to-gray-300 transition-all hover:scale-[1.02] group"
                   >
