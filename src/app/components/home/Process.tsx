@@ -66,7 +66,7 @@ const Process = () => {
             THE DESTINY PATH
           </span>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            From concept to <span className="text-black">customers</span> in 90 days
+            From concept to <span className="text-black">customers</span> in 120 days
           </h2>
           <p className="text-xl text-gray-600">
             A proven 3-phase process that eliminates guesswork and accelerates your path to product-market fit.
@@ -118,7 +118,7 @@ const Process = () => {
           <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
             <h3 className="text-2xl font-bold mb-4">Ready to walk the path?</h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Book a free strategy session where we'll map out your product's first 90 days.
+              Book a free strategy session where we'll map out your product's first 120 days.
             </p>
             <Link
               href="/contact"

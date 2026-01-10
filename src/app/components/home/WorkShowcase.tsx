@@ -1,4 +1,7 @@
 'use client'
+import { RxLightningBolt } from "react-icons/rx";
+import { GiBullseye } from "react-icons/gi";
+import { MdMoneyOff } from "react-icons/md";
 
 import { useState, useEffect } from 'react'
 import BuildMVPModal from '../layout/BuildMVPModal'
@@ -128,7 +131,7 @@ const WorkShowcase = () => {
         <div className={`max-w-4xl mx-auto mb-16 transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { value: '60-90', label: 'Days to Launch', description: 'Typical timeline' },
+              { value: '90-120', label: 'Days to Launch', description: 'Typical timeline' },
               { value: '$25-50K', label: 'Project Range', description: 'Common budget range' },
               { value: '3-Phase', label: 'Clear Process', description: 'Design → Build → Launch' },
               { value: '100%', label: 'Dedicated', description: 'Focus on your success' }
@@ -312,10 +315,10 @@ const WorkShowcase = () => {
             {/* Trust Builders */}
             <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: '🎯', title: 'Strategy First', desc: 'We validate before we build' },
-                { icon: '⚡', title: 'Fast Execution', desc: '60-90 days to launch' },
+                { icon: <GiBullseye size={27}/>, title: 'Strategy First', desc: 'We validate before we build' },
+                { icon: <RxLightningBolt size={27}/>, title: 'Fast Execution', desc: '60-90 days to launch' },
                 { icon: '💬', title: 'Transparent', desc: 'Weekly updates & demos' },
-                { icon: '💰', title: 'Introductory Rates', desc: 'Special founding client pricing' }
+                { icon: <MdMoneyOff size={27}/>, title: 'Introductory Rates', desc: 'Special founding client pricing' }
               ].map((item, idx) => (
                 <div key={idx} className="text-center p-4">
                   <div className="text-3xl mb-3">{item.icon}</div>

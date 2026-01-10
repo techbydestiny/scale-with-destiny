@@ -187,63 +187,11 @@ const CTA = () => {
               </div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className={`bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 transition-all duration-500 hover:bg-white/10 hover:border-white/20 ${
-                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{ transitionDelay: `${index * 100}ms` }}
-                >
-                  <div className="text-3xl md:text-4xl font-bold mb-2 text-white">{stat.value}</div>
-                  <div className="text-lg font-semibold mb-2 text-gray-300">{stat.label}</div>
-                  <div className="text-sm text-gray-400">{stat.description}</div>
-                </div>
-              ))}
-            </div>
 
             {/* Bottom Trust Signals */}
             <div className="mt-20 pt-12 border-t border-white/10">
               <div className="text-center">
-                <p className="text-gray-400 mb-8">Trusted by ambitious founders at:</p>
-                <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 text-gray-300">
-                  {[
-                    'YC-backed Startups',
-                    'Seed-Stage Companies',
-                    'Series A Scale-ups',
-                    'Enterprise Innovators'
-                  ].map((company, index) => (
-                    <div
-                      key={company}
-                      className="flex items-center gap-3"
-                    >
-                      <div className="w-1.5 h-1.5 rounded-full bg-gray-500" />
-                      <span className="font-medium">{company}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Testimonial Preview */}
-                <div className="mt-12 max-w-2xl mx-auto bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8">
-                  <p className="text-lg text-gray-200 mb-4">
-                    "Scale with Destiny took our vague idea and turned it into a launch-ready MVP in 75 days. 
-                    Their process is exactly what every founder needs."
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="font-semibold">Alex Chen</div>
-                      <div className="text-sm text-gray-400">Founder, RevenueOS (YC W23)</div>
-                    </div>
-                    <Link
-                      href="/testimonials"
-                      className="text-sm font-medium text-gray-300 hover:text-white transition-colors"
-                    >
-                      Read more stories →
-                    </Link>
-                  </div>
-                </div>
+                <p className="text-gray-400 mb-8">Trusted by ambitious founders</p>
               </div>
             </div>
           </div>
