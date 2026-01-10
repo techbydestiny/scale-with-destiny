@@ -27,10 +27,10 @@ const Hero = ({ onStartMVP }: { onStartMVP: () => void }) => {
   }, [])
 
   const metrics = [
-    { value: '60-90', label: 'Days to MVP', suffix: 'Days' },
+    { value: '90-120', label: 'Days to MVP', suffix: 'Days' },
     { value: '100%', label: 'On-Time Delivery', suffix: 'On-Time' },
     { value: '24/7', label: 'Partner Support', suffix: 'Support' },
-    { value: '$0', label: 'Down Payment', suffix: 'To Start' },
+    { value: '100%', label: 'No Equity Required', suffix: 'Yours' },
   ]
 
   const features = [
@@ -44,7 +44,7 @@ const Hero = ({ onStartMVP }: { onStartMVP: () => void }) => {
     'We design, develop, and prep your SaaS MVP for market.',
     'From idea to launch in 90 days or less.',
     'Your dedicated partner for product-market fit.',
-    'Strategy, design, development, and launch—handled.'
+    'Strategy, design, development, and launch handled.'
   ]
 
   const scrollToProcess = (e: React.MouseEvent) => {
@@ -80,7 +80,7 @@ const Hero = ({ onStartMVP }: { onStartMVP: () => void }) => {
               </div>
             </div>
             <div className="px-5 py-2.5 bg-black text-white text-sm font-medium">
-              $0 DOWN
+              100% YOURS
             </div>
           </div>
           
