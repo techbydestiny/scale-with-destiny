@@ -2,21 +2,35 @@
 import { useState } from 'react'
 import Hero from '../components/home/Hero'
 import Process from '../components/home/Process'
-import WorkShowcase from '../components/home/WorkShowcase'
+import ServicesShowcase from '@/components/home/servicesShowcase'
 import CTA from '../components/home/CTA'
-import StartMVPModal from '../components/layout/StartMVPModal'
+import BuildProjectModal from '../components/layout/BuildProjectModal' // Changed from StartMVPModal
 
 export default function Home() {
-   const [startModalOpen, setStartModalOpen] = useState(false)
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false)
+  const [selectedService, setSelectedService] = useState<{type: string, category: string} | null>(null)
+  
   return (
     <>
-      <Hero onStartMVP={() => setStartModalOpen(true)}/>
+      <Hero onGetQuote={() => setQuoteModalOpen(true)} />
       <Process />
-      <WorkShowcase />
+      <ServicesShowcase 
+        onOpenQuoteModal={(serviceType, category) => {
+          setSelectedService({ type: serviceType, category })
+          setQuoteModalOpen(true)
+        }}
+      />
       <CTA />
 
-      {startModalOpen && (
-        <StartMVPModal onClose={() => setStartModalOpen(false)} />
+      {quoteModalOpen && selectedService && (
+        <BuildProjectModal 
+          onClose={() => {
+            setQuoteModalOpen(false)
+            setSelectedService(null)
+          }}
+          serviceType={selectedService.type}
+          category={selectedService.category}
+        />
       )}
     </>
   )
