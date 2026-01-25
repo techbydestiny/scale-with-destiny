@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { MdAttachEmail, MdLocationOn, MdAccessTime } from "react-icons/md"
 import { BsWhatsapp } from 'react-icons/bs'
 import { FaTwitter, FaLinkedinIn, FaInstagram, FaGlobe, FaHeadset, FaChartLine } from "react-icons/fa"
+import emailjs from '@emailjs/browser'
 
 export default function ContactPage() {
-    const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,18 +23,51 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (isSubmitting) return
+    
+    // Validation
+    if (!formData.name || !formData.email || !formData.location || !formData.serviceInterest || !formData.message) {
+      setError('Please fill in all required fields (*)')
+      return
+    }
+
     setIsSubmitting(true)
+    setError('')
 
     try {
-      console.log('Contact form submitted:', formData)
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      // Prepare EmailJS template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        business_name: formData.businessName,
+        business_type: formData.businessType,
+        location: formData.location,
+        services: formData.serviceInterest,
+        budget: formData.budget,
+        timeline: formData.timeline,
+        message: formData.message,
+        urgency: formData.urgency,
+        submitted_at: new Date().toLocaleString(),
+        timestamp: new Date().toISOString()
+      }
+
+      // Send email via EmailJS
+      const response =  await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+
+      console.log('EmailJS Success:', response)
       
       setIsSubmitted(true)
+      setIsSubmitting(false)
       
       // Reset form after 5 seconds
       setTimeout(() => {
@@ -53,8 +87,8 @@ export default function ContactPage() {
       }, 5000)
 
     } catch (error) {
-      console.error('Error submitting form:', error)
-    } finally {
+      console.error('EmailJS Error:', error)
+      setError('Failed to send message. Please try again or contact us directly.')
       setIsSubmitting(false)
     }
   }
@@ -71,15 +105,15 @@ export default function ContactPage() {
     {
       icon: <MdAttachEmail size={24}/>,
       title: 'Email',
-      details: ['hello@scalewithdestiny.com', 'Responses within 24 hours'],
-      action: 'mailto:hello@scalewithdestiny.com',
+      details: ['hello.scalewithdestiny@gmail.com', 'Responses within 24 hours'],
+      action: 'mailto:hello.scalewithdestiny@gmail.com',
       color: 'from-blue-50 to-cyan-100'
     },
     {
       icon: <BsWhatsapp size={24}/>,
       title: 'WhatsApp',
-      details: ['+1 (555) 123-4567', 'Quick chat for urgent inquiries'],
-      action: 'https://wa.me/15551234567',
+      details: ['+234 (806) 280-4129', 'Quick chat for urgent inquiries'],
+      action: 'https://wa.me/2348062804129',
       color: 'from-green-50 to-emerald-100'
     },
     {
@@ -92,9 +126,9 @@ export default function ContactPage() {
   ]
 
   const socialLinks = [
-    { platform: 'Twitter', handle: '@scalewithdestiny', url: 'https://twitter.com/scalewithdestiny', icon: <FaTwitter size={20}/> },
+    { platform: 'Twitter', handle: '@scalewthdestiny', url: 'https://twitter.com/scalewthdestiny', icon: <FaTwitter size={20}/> },
     { platform: 'LinkedIn', handle: 'Scale with Destiny', url: 'https://linkedin.com/company/scalewithdestiny', icon: <FaLinkedinIn size={20}/> },
-    { platform: 'Instagram', handle: '@scalewithdestiny', url: 'https://instagram.com/scalewithdestiny', icon: <FaInstagram size={20}/> }
+    { platform: 'Instagram', handle: '@_scalewithdestiny', url: 'https://instagram.com/_scalewithdestiny', icon: <FaInstagram size={20}/> }
   ]
 
   const serviceOptions = [
@@ -252,6 +286,18 @@ export default function ContactPage() {
               {/* Right Column - Contact Form */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 md:p-12">
+                  {/* Error Message */}
+                  {error && (
+                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+                      <div className="flex items-center gap-3">
+                        <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-red-700">{error}</span>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Success Message */}
                   {isSubmitted ? (
                     <div className="text-center py-12">
@@ -262,7 +308,7 @@ export default function ContactPage() {
                       </div>
                       <h3 className="text-2xl font-bold mb-4 text-gray-900">Message Sent!</h3>
                       <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                        Thank you for reaching out. We'll get back to you within 24 hours with a personalized strategy for your business.
+                        Thank you for reaching out via EmailJS. We'll get back to you within 24 hours with a personalized strategy for your business.
                       </p>
                       <button
                         onClick={() => setIsSubmitted(false)}

@@ -7,6 +7,7 @@ import { IoLogoWhatsapp } from "react-icons/io"
 import { FaXTwitter } from "react-icons/fa6"
 import { FaInstagramSquare } from "react-icons/fa"
 import { usePathname } from 'next/navigation'
+import emailjs from '@emailjs/browser'
 
 const navigation = [
   { name: 'Services', href: '#services' },
@@ -151,7 +152,7 @@ export default function Header() {
   )
 }
 
-// Quote Modal Component - UPDATED FOR BUSINESS SERVICES
+// Quote Modal Component -  EMAILJS
 const QuoteModal = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
     name: '',
@@ -171,6 +172,7 @@ const QuoteModal = ({ onClose }: { onClose: () => void }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const serviceOptions = [
     'Web Design & Development',
@@ -186,78 +188,83 @@ const QuoteModal = ({ onClose }: { onClose: () => void }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null)
 
     try {
-      // Prepare email content
-      const emailSubject = `New Business Quote Request from ${formData.name} - ${formData.company || 'New Business'}`
-
-      const emailBody = `
-NEW BUSINESS QUOTE REQUEST - SCALE WITH DESTINY
-
-CONTACT INFORMATION:
-• Name: ${formData.name}
-• Email: ${formData.email}
-• Company: ${formData.company || 'Not provided'}
-• Business Type: ${formData.businessType || 'Not specified'}
-• Location: ${formData.location || 'Not specified'}
-
-SERVICES REQUESTED:
-${formData.services.length > 0 
-  ? formData.services.map(service => `• ${service}`).join('\n') 
-  : '• Not specified'}
-
-PROJECT DETAILS:
-• Budget Range: ${formData.budget || 'Not specified'}
-• Timeline: ${formData.timeline || 'Not specified'}
-
-CONTACT PREFERENCES:
-• Preferred Method: ${formData.contactMethod.toUpperCase()}
-${formData.contactMethod === 'whatsapp' ? `• WhatsApp: ${formData.whatsappNumber}` : ''}
-${formData.contactMethod === 'instagram' ? `• Instagram: ${formData.instagram}` : ''}
-${formData.contactMethod === 'twitter' ? `• Twitter/X: ${formData.twitter}` : ''}
-
-ADDITIONAL MESSAGE:
-${formData.message || 'No additional message'}
-
-TIMESTAMP: ${new Date().toLocaleString()}
----
-Submitted via Scale With Destiny Website - Business Services Quote
-      `.trim()
-
-      // YOUR EMAIL - UPDATE THIS
-      const recipientEmail = 'hello@scalewithdestiny.com'
       
-      // Create mailto link
-      const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
-      
-      // Open user's email client
-      window.location.href = mailtoLink
-      
-      setIsSubmitted(true)
-      
-      // Reset form and close after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false)
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          businessType: '',
-          location: '',
-          services: [],
-          budget: '',
-          timeline: '',
-          contactMethod: 'email',
-          whatsappNumber: '',
-          instagram: '',
-          twitter: '',
-          message: ''
-        })
-        onClose()
-      }, 5000)
+      emailjs.init(process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!)//  emailjs  public key
+
+      // Prepare template parameters
+   const templateParams = {
+    from_name: String(formData.name || 'Not provided'),
+    from_email: String(formData.email || 'Not provided'),
+    business_name: String(formData.company || 'Not provided'),
+    business_type: String(formData.businessType || 'Not specified'),
+    location: String(formData.location || 'Not specified'),
+    services: Array.isArray(formData.services)
+      ? formData.services.join(', ')
+      : 'Not specified',
+    budget: String(formData.budget || 'Not specified'),
+    timeline: String(formData.timeline || 'Not specified'),
+    contact_method: String(formData.contactMethod || 'EMAIL').toUpperCase(),
+    whatsapp: String(
+      formData.contactMethod === 'whatsapp'
+        ? formData.whatsappNumber || 'Not provided'
+        : 'N/A'
+    ),
+    instagram: String(
+      formData.contactMethod === 'instagram'
+        ? formData.instagram || 'Not provided'
+        : 'N/A'
+    ),
+    twitter: String(
+      formData.contactMethod === 'twitter'
+        ? formData.twitter || 'Not provided'
+        : 'N/A'
+  ),
+  message: String(formData.message || 'No additional message'),
+  urgency: 'none',
+  submitted_at: String(new Date().toLocaleString()),
+}
+
+
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, // EmailJS service ID  
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // EmailJS template ID
+        templateParams
+      )
+
+      if (response.status === 200) {
+        setIsSubmitted(true)
+        
+        // Reset form and close after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false)
+          setFormData({
+            name: '',
+            email: '',
+            company: '',
+            businessType: '',
+            location: '',
+            services: [],
+            budget: '',
+            timeline: '',
+            contactMethod: 'email',
+            whatsappNumber: '',
+            instagram: '',
+            twitter: '',
+            message: ''
+          })
+          onClose()
+        }, 5000)
+      } else {
+        throw new Error('Failed to send email')
+      }
 
     } catch (error) {
-      console.error('Error:', error)
+      console.error('EmailJS Error:', error)
+      setError('Failed to send your quote request. Please try again or contact us directly.')
     } finally {
       setIsSubmitting(false)
     }
@@ -307,6 +314,18 @@ Submitted via Scale With Destiny Website - Business Services Quote
           </button>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="m-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-red-700">{error}</span>
+            </div>
+          </div>
+        )}
+
         {/* Success Message */}
         {isSubmitted ? (
           <div className="p-8 text-center">
@@ -315,12 +334,12 @@ Submitted via Scale With Destiny Website - Business Services Quote
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">Check Your Email!</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">Quote Request Sent!</h3>
             <p className="text-gray-600 mb-4">
-              We've opened your email client with your quote request details.
+              Thank you for your interest! We've received your quote request.
             </p>
             <p className="text-gray-600 mb-6">
-              Just hit <strong>"Send"</strong> to submit your request. We'll respond within 24 hours.
+              We'll review your information and get back to you within <strong>24 hours</strong>.
             </p>
             <div className="animate-pulse text-sm text-gray-500">
               This window will close in 5 seconds...
@@ -568,7 +587,7 @@ Submitted via Scale With Destiny Website - Business Services Quote
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-4 px-6 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-4 px-6 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -576,10 +595,10 @@ Submitted via Scale With Destiny Website - Business Services Quote
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Opening Email...
+                    Sending...
                   </span>
                 ) : (
-                  'Open Email & Send Request'
+                  'Send Quote Request'
                 )}
               </button>
               <button
@@ -594,8 +613,8 @@ Submitted via Scale With Destiny Website - Business Services Quote
             {/* Privacy Notice */}
             <div className="mt-6 p-4 bg-gray-50 rounded-xl">
               <p className="text-xs text-gray-600 text-center">
-                <strong>How this works:</strong> We'll open your email client with a pre-filled quote request.
-                Just hit "Send" and we'll get back to you with a custom proposal within 24 hours.
+                <strong>How this works:</strong> We'll automatically send your quote request to our team.
+                Just click "Send Quote Request" and we'll get back to you with a custom proposal within 24 hours.
                 <br />
                 <span className="block mt-1">
                   Your information is secure. We never share your details with third parties.

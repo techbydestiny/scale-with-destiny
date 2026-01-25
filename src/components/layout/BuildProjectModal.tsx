@@ -5,6 +5,8 @@ import { MdAttachEmail } from "react-icons/md"
 import { IoLogoWhatsapp } from "react-icons/io"
 import { FaXTwitter } from "react-icons/fa6"
 import { FaInstagramSquare } from "react-icons/fa"
+import emailjs from '@emailjs/browser'
+
 
 interface BuildProjectModalProps {
   onClose: () => void
@@ -31,57 +33,67 @@ const BuildProjectModal = ({ onClose, serviceType, category }: BuildProjectModal
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (isSubmitting) return
+    
+    // Validation
+    if (!formData.name || !formData.email || !formData.location) {
+      setError('Please fill in all required fields (*)')
+      return
+    }
+
+    if (formData.contactMethod === 'whatsapp' && !formData.whatsappNumber) {
+      setError('Please provide your WhatsApp number')
+      return
+    }
+    if (formData.contactMethod === 'instagram' && !formData.instagram) {
+      setError('Please provide your Instagram username')
+      return
+    }
+    if (formData.contactMethod === 'twitter' && !formData.twitter) {
+      setError('Please provide your Twitter/X username')
+      return
+    }
+
     setIsSubmitting(true)
+    setError('')
 
     try {
-      // Prepare email content
-      const emailSubject = `New Service Inquiry: ${serviceType} - ${formData.businessName || 'New Business'}`
+      // Prepare EmailJS template parameters
+      const templateParams = {
+        services: serviceType,
+        from_name: formData.name,
+        from_email: formData.email,
+        business_name: formData.businessName,
+        business_type: formData.businessType,
+        location: formData.location,
+        budget: formData.budget,
+        timeline: formData.timeline,
+        contact_method: formData.contactMethod,
+        whatsapp_number: formData.whatsappNumber,
+        instagram: formData.instagram,
+        twitter: formData.twitter,
+        message: formData.message,
+        urgency: 'none',
+        submitted_at: new Date().toLocaleString(),
+        timestamp: new Date().toISOString()
+      }
 
-      const emailBody = `
-NEW BUSINESS SERVICE INQUIRY - SCALE WITH DESTINY
-
-SERVICE DETAILS:
-• Service Type: ${serviceType}
-• Category: ${category}
-
-BUSINESS INFORMATION:
-• Contact Name: ${formData.name}
-• Email: ${formData.email}
-• Business Name: ${formData.businessName || 'Not provided'}
-• Business Type: ${formData.businessType || 'Not specified'}
-• Location: ${formData.location || 'Not specified'}
-
-PROJECT REQUIREMENTS:
-• Budget Range: ${formData.budget || 'Not specified'}
-• Desired Timeline: ${formData.timeline || 'Not specified'}
-
-CONTACT PREFERENCES:
-• Preferred Method: ${formData.contactMethod.toUpperCase()}
-${formData.contactMethod === 'whatsapp' ? `• WhatsApp: ${formData.whatsappNumber}` : ''}
-${formData.contactMethod === 'instagram' ? `• Instagram: ${formData.instagram}` : ''}
-${formData.contactMethod === 'twitter' ? `• Twitter/X: ${formData.twitter}` : ''}
-
-ADDITIONAL MESSAGE:
-${formData.message || 'No additional message'}
-
-TIMESTAMP: ${new Date().toLocaleString()}
----
-Submitted via Scale With Destiny Website - Service Quote Request
-      `.trim()
-
-      // YOUR EMAIL - UPDATE THIS
-      const recipientEmail = 'hello@scalewithdestiny.com'
-      
-      // Create mailto link
-      const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
-      
-      // Open user's email client
-      window.location.href = mailtoLink
+      // Send email via EmailJS
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      console.log('EmailJS Success:', response)
       
       setIsSubmitted(true)
+      setIsSubmitting(false)
       
       // Reset form and close after 5 seconds
       setTimeout(() => {
@@ -105,8 +117,8 @@ Submitted via Scale With Destiny Website - Service Quote Request
       }, 5000)
 
     } catch (error) {
-      console.error('Error:', error)
-    } finally {
+      console.error('EmailJS Error:', error)
+      setError('Failed to send quote request. Please try again or contact us directly.')
       setIsSubmitting(false)
     }
   }
@@ -167,7 +179,19 @@ Submitted via Scale With Destiny Website - Service Quote Request
           </button>
         </div>
 
-        {/* Success Message */}
+        {/* Error Message */}
+        {error && (
+          <div className="m-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <div className="flex items-center gap-3">
+              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-red-700">{error}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Success Message - Updated for EmailJS */}
         {isSubmitted ? (
           <div className="p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
@@ -175,12 +199,12 @@ Submitted via Scale With Destiny Website - Service Quote Request
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-900">Check Your Email!</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">Quote Request Sent!</h3>
             <p className="text-gray-600 mb-4">
-              We've opened your email client with your quote request details.
+              Thank you for your interest! We've received your quote request via EmailJS.
             </p>
             <p className="text-gray-600 mb-6">
-              Just hit <strong>"Send"</strong> to submit your request. We'll respond within 24 hours.
+              We'll review your information and get back to you within <strong>24 hours</strong>.
             </p>
             <div className="animate-pulse text-sm text-gray-500">
               This window will close in 5 seconds...
@@ -429,7 +453,7 @@ Submitted via Scale With Destiny Website - Service Quote Request
               </div>
             </div>
 
-            {/* Form Actions */}
+            {/* Form Actions - Updated button text */}
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 type="submit"
@@ -442,10 +466,10 @@ Submitted via Scale With Destiny Website - Service Quote Request
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
-                    Opening Email...
+                    Sending...
                   </span>
                 ) : (
-                  'Open Email & Send Request'
+                  'Send Quote Request'
                 )}
               </button>
               <button
@@ -457,11 +481,11 @@ Submitted via Scale With Destiny Website - Service Quote Request
               </button>
             </div>
 
-            {/* Privacy Notice */}
+            {/* Privacy Notice - Updated for EmailJS */}
             <div className="mt-6 p-4 bg-gray-50 rounded-xl">
               <p className="text-xs text-gray-600 text-center">
-                <strong>How this works:</strong> We'll open your email client with a pre-filled quote request.
-                Just hit "Send" and we'll get back to you with a custom proposal within 24 hours.
+                <strong>How this works:</strong> We'll send your quote request directly to our team via EmailJS.
+                Just click "Send Quote Request" and we'll get back to you with a custom proposal within 24 hours.
                 <br />
                 <span className="block mt-1">
                   Your information is secure. We never share your details with third parties.

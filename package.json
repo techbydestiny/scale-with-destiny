@@ -9,7 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@vercel/analytics": "^1.6.1",
+    "emailjs": "^5.0.0",
     "lucide-react": "^0.545.0",
     "next": "16.1.1",
     "react": "19.2.3",

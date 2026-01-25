@@ -21,7 +21,7 @@ const Footer = () => {
       { label: 'Africa', href: '/global-reach' },
     ],
     Company: [
-      { label: 'Our Process', href: '/process' },
+      { label: 'Our Process', href: '#process' },
       { label: 'Contact Us', href: '/contact' },
     ],
     Legal: [
@@ -117,7 +117,7 @@ const Footer = () => {
               </div>
               <div>
                 <div className="text-sm font-medium text-gray-900">Phone Support</div>
-                <div className="text-gray-600">+1 (555) 123-4567</div>
+                <div className="text-gray-600">+234 (806) 280-4129</div>
               </div>
             </div>
             
@@ -128,7 +128,7 @@ const Footer = () => {
               <div>
                 <div className="text-sm font-medium text-gray-900">Email</div>
                 <a href="mailto:hello@scalewithdestiny.com" className="text-gray-600 hover:text-indigo-600 transition-colors">
-                  hello@scalewithdestiny.com
+                  hello.scalewithdestiny@gmail.com
                 </a>
               </div>
             </div>

@@ -266,7 +266,7 @@ export default function GlobalReach() {
                           </div>
                           <div>
                             <div className="text-sm font-medium">Email Us</div>
-                            <div className="text-gray-300 text-sm">hello@scalewithdestiny.com</div>
+                            <div className="text-gray-300 text-sm">hello.scalewithdestiny@gmail.com</div>
                           </div>
                         </div>
                         
@@ -276,7 +276,7 @@ export default function GlobalReach() {
                           </div>
                           <div>
                             <div className="text-sm font-medium">Call Us</div>
-                            <div className="text-gray-300 text-sm">+1 (555) 123-4567</div>
+                            <div className="text-gray-300 text-sm">+234 (806) 280-4129</div>
                           </div>
                         </div>
                         
@@ -319,56 +319,6 @@ export default function GlobalReach() {
                 </div>
                 <h4 className="text-lg font-semibold mb-2 text-gray-900">{service.title}</h4>
                 <p className="text-gray-600 text-sm">{service.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Success Stories */}
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Global Success Stories</h2>
-            <p className="text-gray-600">See how we've helped businesses grow in different regions</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                region: 'Europe',
-                business: 'Boutique Hotel Chain',
-                result: '250% increase in direct bookings',
-                quote: 'Their multi-language SEO strategy transformed our European market presence.',
-                color: 'from-purple-50 to-violet-100'
-              },
-              {
-                region: 'Asia Pacific',
-                business: 'E-commerce Retailer',
-                result: '180% growth in mobile sales',
-                quote: 'The mobile-first approach perfectly captured our Asian customer base.',
-                color: 'from-emerald-50 to-teal-100'
-              },
-              {
-                region: 'Middle East',
-                business: 'Restaurant Group',
-                result: '300% more online orders',
-                quote: 'Arabic website and local payment integration changed our business.',
-                color: 'from-amber-50 to-orange-100'
-              }
-            ].map((story, index) => (
-              <div key={index} className="bg-white rounded-2xl border border-gray-200 p-6 hover:shadow-lg transition-shadow">
-                <div className={`h-2 rounded-full bg-gradient-to-r ${story.color} mb-6`} />
-                <div className="flex items-center gap-3 mb-4">
-                  <FaMapMarkerAlt className="text-gray-400" />
-                  <span className="text-sm font-medium text-gray-600">{story.region}</span>
-                </div>
-                <h4 className="text-xl font-bold mb-2 text-gray-900">{story.business}</h4>
-                <div className="text-lg font-bold text-indigo-600 mb-4">{story.result}</div>
-                <p className="text-gray-600 italic mb-6">"{story.quote}"</p>
-                <a href="/portfolio" className="text-indigo-600 text-sm font-medium hover:text-indigo-700">
-                  View case study →
-                </a>
               </div>
             ))}
           </div>

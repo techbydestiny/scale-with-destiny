@@ -14,7 +14,7 @@ export default function FAQPage() {
       questions: [
         {
           q: 'How much does a professional website cost?',
-          a: 'Website costs range from $2,000 to $15,000+ depending on complexity. Basic business sites start at $2,000-5,000, e-commerce sites at $5,000-10,000, and custom enterprise solutions at $10,000+. We offer free quotes after understanding your specific business needs.',
+          a: 'Website costs range from $200 to $1,000+ depending on complexity. Basic business sites start at $2,000-5,000, e-commerce sites at $5,000-10,000, and custom enterprise solutions at $10,000+. We offer free quotes after understanding your specific business needs.',
           tags: ['pricing', 'website', 'budget']
         },
         {
@@ -301,7 +301,7 @@ export default function FAQPage() {
                     Contact Our Team
                   </a>
                   <a
-                    href="/services"
+                    href="/#services"
                     className="px-8 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-xl hover:border-gray-400 hover:text-gray-900 transition-colors"
                   >
                     View Our Services
