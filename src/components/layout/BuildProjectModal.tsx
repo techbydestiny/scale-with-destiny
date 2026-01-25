@@ -1,133 +1,25 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { MdAttachEmail } from "react-icons/md";
-import { IoLogoWhatsapp } from "react-icons/io";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaInstagramSquare } from "react-icons/fa";
+import { MdAttachEmail } from "react-icons/md"
+import { IoLogoWhatsapp } from "react-icons/io"
+import { FaXTwitter } from "react-icons/fa6"
+import { FaInstagramSquare } from "react-icons/fa"
 
-const navigation = [
-  { name: 'Process', href: '#process' },
-  { name: 'Work', href: '#work' },
-  { name: 'Insights', href: '#insights' },
-  { name: 'Contact', href: '/contact' },
-]
-
-export default function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [startModalOpen, setStartModalOpen] = useState(false)
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId.replace('#', ''))
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-    setMobileMenuOpen(false)
-  }
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    scrollToSection(href)
-  }
-
-  return (
-    <>
-      <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60">
-        <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
-            <Link 
-              href="/" 
-              className="text-xl font-semibold tracking-tight transition-opacity hover:opacity-80"
-            >
-              <span className="text-gray-600">Scale with</span>
-              <span className="font-bold text-black">Destiny</span>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  className="text-sm font-medium text-gray-700 transition-colors hover:text-black cursor-pointer"
-                >
-                  {item.name}
-                </a>
-              ))}
-              <button
-                onClick={() => setStartModalOpen(true)}
-                className="rounded-full cursor-pointer bg-black px-5 py-2 text-sm font-medium text-white transition-all hover:bg-gray-800 hover:scale-105"
-              >
-                Start Your MVP
-              </button>
-            </nav>
-
-            {/* Mobile menu button */}
-            <button
-              type="button"
-              className="md:hidden cursor-pointer"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <svg className="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-6 w-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-gray-100 py-4 animate-slide-down">
-              <div className="flex flex-col gap-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href)}
-                    className="text-base font-medium text-gray-700 transition-colors hover:text-black py-2"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false)
-                    setStartModalOpen(true)
-                  }}
-                  className="rounded-full bg-black px-5 py-3 text-base font-medium text-white text-center transition-colors hover:bg-gray-800 mt-4"
-                >
-                  Start Your MVP
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* Start MVP Modal */}
-      {startModalOpen && (
-        <StartMVPModal onClose={() => setStartModalOpen(false)} />
-      )}
-    </>
-  )
+interface BuildProjectModalProps {
+  onClose: () => void
+  serviceType: string
+  category: string
 }
 
-// Start MVP Modal Component - UPDATED TO SEND TO EMAIL
-const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
+const BuildProjectModal = ({ onClose, serviceType, category }: BuildProjectModalProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    company: '',
-    idea: '',
+    businessName: '',
+    businessType: '',
+    location: '',
+    serviceInterest: serviceType,
     budget: '',
     timeline: '',
     contactMethod: 'email',
@@ -146,20 +38,25 @@ const StartMVPModal = ({ onClose }: { onClose: () => void }) => {
 
     try {
       // Prepare email content
-      const emailSubject = `New MVP Inquiry from ${formData.name} - ${formData.company || 'No Company'}`
+      const emailSubject = `New Service Inquiry: ${serviceType} - ${formData.businessName || 'New Business'}`
 
       const emailBody = `
-NEW MVP INQUIRY - SCALE WITH DESTINY
+NEW BUSINESS SERVICE INQUIRY - SCALE WITH DESTINY
 
-CONTACT INFORMATION:
-• Name: ${formData.name}
+SERVICE DETAILS:
+• Service Type: ${serviceType}
+• Category: ${category}
+
+BUSINESS INFORMATION:
+• Contact Name: ${formData.name}
 • Email: ${formData.email}
-• Company/Project: ${formData.company || 'Not provided'}
+• Business Name: ${formData.businessName || 'Not provided'}
+• Business Type: ${formData.businessType || 'Not specified'}
+• Location: ${formData.location || 'Not specified'}
 
-PROJECT DETAILS:
-• Idea: ${formData.idea}
+PROJECT REQUIREMENTS:
 • Budget Range: ${formData.budget || 'Not specified'}
-• Timeline: ${formData.timeline || 'Not specified'}
+• Desired Timeline: ${formData.timeline || 'Not specified'}
 
 CONTACT PREFERENCES:
 • Preferred Method: ${formData.contactMethod.toUpperCase()}
@@ -172,11 +69,11 @@ ${formData.message || 'No additional message'}
 
 TIMESTAMP: ${new Date().toLocaleString()}
 ---
-Submitted via Scale with Destiny Website
+Submitted via Scale With Destiny Website - Service Quote Request
       `.trim()
 
       // YOUR EMAIL - UPDATE THIS
-      const recipientEmail = 'hello.scalewithdestiny@gmail.com'
+      const recipientEmail = 'hello@scalewithdestiny.com'
       
       // Create mailto link
       const mailtoLink = `mailto:${recipientEmail}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
@@ -192,8 +89,10 @@ Submitted via Scale with Destiny Website
         setFormData({
           name: '',
           email: '',
-          company: '',
-          idea: '',
+          businessName: '',
+          businessType: '',
+          location: '',
+          serviceInterest: serviceType,
           budget: '',
           timeline: '',
           contactMethod: 'email',
@@ -220,11 +119,32 @@ Submitted via Scale with Destiny Website
     }))
   }
 
+  const budgetOptions = [
+    { value: '', label: 'Select budget range' },
+    { value: 'Under $1,000', label: 'Under $1,000' },
+    { value: '$1,000 - $3,000', label: '$1,000 - $3,000' },
+    { value: '$3,000 - $5,000', label: '$3,000 - $5,000' },
+    { value: '$5,000 - $10,000', label: '$5,000 - $10,000' },
+    { value: '$10,000 - $20,000', label: '$10,000 - $20,000' },
+    { value: '$20,000+', label: '$20,000+' },
+    { value: 'Need consultation', label: 'Need consultation' }
+  ]
+
+  const timelineOptions = [
+    { value: '', label: 'Select timeline' },
+    { value: 'ASAP (Within 1 week)', label: 'ASAP (Within 1 week)' },
+    { value: 'Within 2-4 weeks', label: 'Within 2-4 weeks' },
+    { value: '1-2 months', label: '1-2 months' },
+    { value: '2-3 months', label: '2-3 months' },
+    { value: '3+ months', label: '3+ months' },
+    { value: 'Not sure', label: 'Not sure' }
+  ]
+
   const contactMethods = [
-    { id: 'email', label: 'Email', icon: <MdAttachEmail size={24}/> },
-    { id: 'whatsapp', label: 'WhatsApp', icon: <IoLogoWhatsapp size={24}/> },
-    { id: 'instagram', label: 'Instagram', icon: <FaInstagramSquare size={24}/>},
-    { id: 'twitter', label: 'Twitter/X', icon: <FaXTwitter size={24}/> }
+    { id: 'email', label: 'Email', icon: <MdAttachEmail size={24} /> },
+    { id: 'whatsapp', label: 'WhatsApp', icon: <IoLogoWhatsapp size={24} /> },
+    { id: 'instagram', label: 'Instagram', icon: <FaInstagramSquare size={24} /> },
+    { id: 'twitter', label: 'Twitter/X', icon: <FaXTwitter size={24} /> }
   ]
 
   return (
@@ -233,8 +153,8 @@ Submitted via Scale with Destiny Website
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold">Start Your MVP Journey</h2>
-            <p className="text-gray-600 text-sm">Tell us about your idea and how you'd like to connect</p>
+            <h2 className="text-2xl font-bold text-gray-900">Get Quote for {serviceType}</h2>
+            <p className="text-gray-600 text-sm">Tell us about your business needs</p>
           </div>
           <button
             onClick={onClose}
@@ -247,7 +167,7 @@ Submitted via Scale with Destiny Website
           </button>
         </div>
 
-        {/* Success Message - UPDATED */}
+        {/* Success Message */}
         {isSubmitted ? (
           <div className="p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
@@ -255,12 +175,12 @@ Submitted via Scale with Destiny Website
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold mb-4">Check Your Email!</h3>
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">Check Your Email!</h3>
             <p className="text-gray-600 mb-4">
-              We've opened your email client with a pre-filled message.
+              We've opened your email client with your quote request details.
             </p>
             <p className="text-gray-600 mb-6">
-              Just hit <strong>"Send"</strong> to submit your inquiry to us.
+              Just hit <strong>"Send"</strong> to submit your request. We'll respond within 24 hours.
             </p>
             <div className="animate-pulse text-sm text-gray-500">
               This window will close in 5 seconds...
@@ -270,9 +190,23 @@ Submitted via Scale with Destiny Website
           /* Form */
           <form onSubmit={handleSubmit} className="p-6">
             <div className="space-y-6">
-              {/* Basic Information */}
+              {/* Service Info */}
+              <div className="p-4 rounded-xl bg-gradient-to-r from-indigo-50 to-cyan-50 border border-indigo-100">
+                <h3 className="text-lg font-semibold text-indigo-700 mb-2">Service Selected</h3>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-medium text-gray-900">{serviceType}</p>
+                    <p className="text-sm text-gray-600">{category}</p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-white text-indigo-600 text-sm font-medium border border-indigo-200">
+                    Quote Request
+                  </span>
+                </div>
+              </div>
+
+              {/* Business Information */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Business Information</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -284,7 +218,7 @@ Submitted via Scale with Destiny Website
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="John Doe"
                     />
                   </div>
@@ -298,93 +232,116 @@ Submitted via Scale with Destiny Website
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="john@example.com"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company/Project Name
+                      Business Name
                     </label>
                     <input
                       type="text"
-                      name="company"
-                      value={formData.company}
+                      name="businessName"
+                      value={formData.businessName}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="Startup Name"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      placeholder="Your Business Name"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Budget Range
+                      Business Type
                     </label>
-                    <select
-                      name="budget"
-                      value={formData.budget}
+                    <input
+                      type="text"
+                      name="businessType"
+                      value={formData.businessType}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                    >
-                      <option value="">Select budget</option>
-                      <option value="$5k-10k">$5,000 - $10,000</option>
-                      <option value="$10k-25k">$10,000 - $25,000</option>
-                      <option value="$25k-50k">$25,000 - $50,000</option>
-                      <option value="$50k+">$50,000+</option>
-                    </select>
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      placeholder="e.g., Restaurant, Retail, Service, etc."
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div>
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Location Information</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Business Location *
+                    </label>
+                    <input
+                      type="text"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      placeholder="City, Country (e.g., New York, USA)"
+                    />
+                    <p className="mt-2 text-sm text-gray-500">
+                      We use this to tailor our services to your local market needs.
+                    </p>
                   </div>
                 </div>
               </div>
 
               {/* Project Details */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">Project Details</h3>
-                <div className="space-y-4">
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Project Details</h3>
+                <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Tell us about your idea *
+                      Budget Range *
                     </label>
-                    <textarea
-                      name="idea"
-                      value={formData.idea}
+                    <select
+                      name="budget"
+                      value={formData.budget}
                       onChange={handleChange}
                       required
-                      rows={3}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                      placeholder="Describe your SaaS/MVP idea..."
-                    />
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                      {budgetOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Timeline
-                      </label>
-                      <select
-                        name="timeline"
-                        value={formData.timeline}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                      >
-                        <option value="">Select timeline</option>
-                        <option value="ASAP">ASAP (Within 1 month)</option>
-                        <option value="1-2 months">1-2 months</option>
-                        <option value="2-3 months">2-3 months</option>
-                        <option value="3+ months">3+ months</option>
-                      </select>
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Desired Timeline *
+                    </label>
+                    <select
+                      name="timeline"
+                      value={formData.timeline}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    >
+                      {timelineOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
 
               {/* Contact Preference */}
               <div>
-                <h3 className="text-lg font-semibold mb-4">How would you like us to reach you? *</h3>
+                <h3 className="text-lg font-semibold mb-4 text-gray-900">Preferred Contact Method *</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                   {contactMethods.map((method) => (
                     <label
                       key={method.id}
                       className={`relative flex flex-col items-center justify-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
                         formData.contactMethod === method.id
-                          ? 'border-black bg-black text-white'
+                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -415,7 +372,7 @@ Submitted via Scale with Destiny Website
                       value={formData.whatsappNumber}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -432,7 +389,7 @@ Submitted via Scale with Destiny Website
                       value={formData.instagram}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="@username"
                     />
                   </div>
@@ -449,7 +406,7 @@ Submitted via Scale with Destiny Website
                       value={formData.twitter}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="@username"
                     />
                   </div>
@@ -459,25 +416,25 @@ Submitted via Scale with Destiny Website
               {/* Additional Message */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Anything else you'd like to share?
+                  Additional Details or Questions
                 </label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  rows={3}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent"
-                  placeholder="Questions, concerns, or additional details..."
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  placeholder="Tell us more about your business needs, specific requirements, or any questions you have..."
                 />
               </div>
             </div>
 
-            {/* Form Actions - UPDATED BUTTON TEXT */}
+            {/* Form Actions */}
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 py-4 px-6 bg-black text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 py-4 px-6 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-indigo-500/25 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -488,7 +445,7 @@ Submitted via Scale with Destiny Website
                     Opening Email...
                   </span>
                 ) : (
-                  'Open Email & Send Inquiry'
+                  'Open Email & Send Request'
                 )}
               </button>
               <button
@@ -500,14 +457,14 @@ Submitted via Scale with Destiny Website
               </button>
             </div>
 
-            {/* Privacy Notice - UPDATED */}
+            {/* Privacy Notice */}
             <div className="mt-6 p-4 bg-gray-50 rounded-xl">
               <p className="text-xs text-gray-600 text-center">
-                <strong>How this works:</strong> When you click submit, we'll open your email client with a pre-filled message. 
-                Just hit "Send" to submit your inquiry to us. We'll respond within 24 hours.
+                <strong>How this works:</strong> We'll open your email client with a pre-filled quote request.
+                Just hit "Send" and we'll get back to you with a custom proposal within 24 hours.
                 <br />
                 <span className="block mt-1">
-                  By submitting this form, you agree to our Privacy Policy. We'll never share your information.
+                  Your information is secure. We never share your details with third parties.
                 </span>
               </p>
             </div>
@@ -517,3 +474,5 @@ Submitted via Scale with Destiny Website
     </div>
   )
 }
+
+export default BuildProjectModal
