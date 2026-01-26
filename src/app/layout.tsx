@@ -18,10 +18,20 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+
   title: {
     default: 'Scale With Destiny | Web Design, SEO & Business Setup',
     template: '%s | Scale With Destiny'
   },
+   icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+
   description: 'Professional web design, SEO optimization & business manager setup for local businesses worldwide. Helping local businesses establish their digital presence across multiple locations.',
   keywords: [
     'web design services',
@@ -71,9 +81,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Scale With Destiny | Web Design & Business Solutions',
     description: 'Helping local businesses worldwide with web design, SEO and business setup',
-    creator: '@scalewithdestiny',
+    creator: '@scalewthdestiny',
     images: ['/og-image.png'],
-    site: '@scalewithdestiny',
+    site: '@scalewthdestiny',
   },
   robots: {
     index: true,
