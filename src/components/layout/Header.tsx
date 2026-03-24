@@ -12,7 +12,6 @@ import emailjs from '@emailjs/browser'
 const navigation = [
   { name: 'Services', href: '#services' },
   { name: 'Process', href: '#process' },
-  { name: 'Global Reach', href: '/global-reach' },
   { name: 'Contact', href: '/contact' },
 ]
 

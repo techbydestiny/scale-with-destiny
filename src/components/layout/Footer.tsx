@@ -13,13 +13,6 @@ const Footer = () => {
       { label: 'Business Setup', href: '#services' },
       { label: 'Light Marketing', href: '#services' },
     ],
-    'Global Reach': [
-      { label: 'North America', href: '/global-reach' },
-      { label: 'Europe', href: '/global-reach' },
-      { label: 'Asia Pacific', href: '/global-reach' },
-      { label: 'Middle East', href: '/global-reach' },
-      { label: 'Africa', href: '/global-reach' },
-    ],
     Company: [
       { label: 'Our Process', href: '#process' },
       { label: 'Contact Us', href: '/contact' },
@@ -27,7 +20,6 @@ const Footer = () => {
     Legal: [
       { label: 'Privacy Policy', href: '/privacy' },
       { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
     ],
   }
 
