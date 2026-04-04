@@ -21,6 +21,8 @@ interface QuoteFormData {
   message: string
 }
 
+const heroImage = '/images/hero-image.png'
+
 const serviceOptions = [
   'Web Design',
   'SEO',
@@ -374,7 +376,6 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                         priority
                       /> 
           
-                
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
                         <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 max-w-xs">
                           <Image
