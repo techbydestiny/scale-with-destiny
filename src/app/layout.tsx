@@ -16,7 +16,7 @@ const inter = Inter({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0000FF', // Thrive Sync brand color
+  themeColor: '#0000FF', // 
 }
 
 // Business Information
@@ -427,6 +427,7 @@ export default function RootLayout({
         />
         
         {/* Additional meta tags for better SEO */}
+        <meta name="google-site-verification" content="fndAxw2kbzfJQWLEGWmY6YsAF8H-GLI2IFBxayNSWyI" />
         <meta name="geo.region" content={BUSINESS_INFO.countriesServed.map(c => {
           const codes: Record<string, string> = {
             'Nigeria': 'NG',
