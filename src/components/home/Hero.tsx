@@ -61,6 +61,7 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState('')
+  const [imageError, setImageError] = useState(false)
   
   const [formData, setFormData] = useState<QuoteFormData>({
     name: '',
@@ -232,13 +233,12 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-screen flex items-center bg-black">
-        {/* Background */}
+      {/* Hero Section - Dark Blue Gradient to match country pages */}
+      <section className="relative overflow-hidden min-h-screen flex items-center bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+        {/* Background Effects */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black" />
-          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-indigo-400/5 rounded-full blur-3xl" />
         </div>
 
         <div className="container relative mx-auto px-6 py-24 md:py-32">
@@ -249,8 +249,8 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                 <div className={`inline-flex items-center gap-2 mb-8 transition-all duration-1000 ${
                   loaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
                 }`}>
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-                  <span className="text-xs font-mono tracking-wider text-gray-400 uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-300 animate-pulse" />
+                  <span className="text-xs font-mono tracking-wider text-blue-200 uppercase">
                     Digital Solutions
                   </span>
                 </div>
@@ -261,7 +261,7 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                   <span className="text-white block">Scale Your</span>
                   <span className="text-white block">
                     Business{' '}
-                    <span className="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-blue-200 to-cyan-200 bg-clip-text text-transparent">
                       Worldwide
                     </span>
                   </span>
@@ -272,7 +272,7 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                     {taglines.map((tagline, index) => (
                       <p
                         key={index}
-                        className={`absolute top-0 left-0 text-gray-400 text-lg leading-relaxed transition-all duration-500 ${
+                        className={`absolute top-0 left-0 text-blue-100 text-lg leading-relaxed transition-all duration-500 ${
                           currentTagline === index
                             ? 'opacity-100 translate-y-0'
                             : 'opacity-0 -translate-y-4'
@@ -290,9 +290,9 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                   {features.map((feature, index) => (
                     <div
                       key={feature}
-                      className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-gray-300"
+                      className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm text-blue-100"
                     >
-                      <FaCheck className="mr-2 text-blue-500 text-xs" />
+                      <FaCheck className="mr-2 text-blue-300 text-xs" />
                       {feature}
                     </div>
                   ))}
@@ -303,7 +303,7 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                 }`}>
                   <button
                     onClick={handleGetQuote}
-                    className="group relative inline-flex items-center justify-center px-8 py-4 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-all duration-300 hover:scale-105"
+                    className="group relative inline-flex items-center justify-center px-8 py-4 bg-white text-blue-700 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105 shadow-lg"
                   >
                     <span className="relative z-10 flex items-center">
                       Get Your Free Quote
@@ -313,14 +313,14 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                   
                   <button
                     onClick={scrollToServices}
-                    className="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-semibold rounded-full hover:bg-white/5 hover:border-white/40 transition-all duration-300"
+                    className="inline-flex items-center justify-center px-8 py-4 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/50 transition-all duration-300"
                   >
                     View Our Services
                     <FaChevronDown className="ml-2 w-4 h-4" />
                   </button>
                 </div>
 
-                <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/10 transition-all duration-1000 delay-700 ${
+                <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-white/20 transition-all duration-1000 delay-700 ${
                   loaded ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
                 }`}>
                   {metrics.map((metric, index) => (
@@ -330,13 +330,13 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                       onClick={() => setCurrentMetric(index)}
                     >
                       <div className={`text-3xl font-bold text-white mb-1 transition-all duration-300 ${
-                        currentMetric === index ? 'text-blue-500 scale-105' : ''
+                        currentMetric === index ? 'text-blue-300 scale-105' : ''
                       }`}>
                         {metric.value}
-                        <span className="text-sm text-gray-400 ml-0.5">{metric.suffix}</span>
+                        <span className="text-sm text-blue-200 ml-0.5">{metric.suffix}</span>
                       </div>
-                      <div className={`text-xs text-gray-500 tracking-wide transition-colors ${
-                        currentMetric === index ? 'text-blue-500' : ''
+                      <div className={`text-xs text-blue-200/70 tracking-wide transition-colors ${
+                        currentMetric === index ? 'text-blue-300' : ''
                       }`}>
                         {metric.label}
                       </div>
@@ -345,19 +345,34 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                 </div>
               </div>
 
-              {/* Right Column - Image */}
+              {/* Right Column - Image with Next.js optimization */}
               <div className={`hidden lg:block transition-all duration-1000 delay-500 ${
                 loaded ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
               }`}>
                 <div className="relative">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                    <div className="relative w-full h-[500px] md:h-[550px] lg:h-[600px] bg-gradient-to-br from-blue-900/20 to-black">
-                      <img
-                        src="/images/hero-image.png"
-                        alt="Business growth illustration"
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
+                    <div className="relative w-full h-[500px] md:h-[550px] lg:h-[600px] bg-gradient-to-br from-blue-800/50 to-indigo-900/50">
+                      {!imageError ? (
+                        <Image
+                          src="/images/hero-image.png"
+                          alt="Business growth illustration showing global expansion and digital success"
+                          width={600}
+                          height={600}
+                          className="w-full h-full object-cover"
+                          priority
+                          onError={() => setImageError(true)}
+                        />
+                      ) : (
+                        // Fallback content if image doesn't load
+                        <div className="w-full h-full flex items-center justify-center">
+                          <div className="text-center p-8">
+                            <FaGlobe className="w-24 h-24 text-blue-300 mx-auto mb-4" />
+                            <p className="text-white text-lg">Global Digital Solutions</p>
+                            <p className="text-blue-200 text-sm mt-2">Web Design • SEO • Business Setup</p>
+                          </div>
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     </div>
                   </div>
                   
@@ -386,22 +401,29 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
           </div>
         </div>
         
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-1000 ${
+        {/* Wave separator to white */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" className="w-full">
+            <path fill="#ffffff" fillOpacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"></path>
+          </svg>
+        </div>
+        
+        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 transition-all duration-1000 delay-1000 z-10 ${
           loaded ? 'opacity-100' : 'opacity-0'
         }`}>
           <button
             onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
             className="flex flex-col items-center gap-2 group focus:outline-none"
           >
-            <span className="text-[10px] text-gray-600 tracking-widest uppercase group-hover:text-gray-400 transition-colors">
+            <span className="text-[10px] text-white/50 tracking-widest uppercase group-hover:text-white/80 transition-colors">
               Scroll
             </span>
-            <FaChevronDown className="w-5 h-5 text-gray-600 group-hover:text-gray-400 transition-colors animate-bounce" />
+            <FaChevronDown className="w-5 h-5 text-white/50 group-hover:text-white/80 transition-colors animate-bounce" />
           </button>
         </div>
       </section>
 
-      {/* Quote Modal */}
+      {/* Quote Modal - Keep as is */}
       <AnimatePresence>
         {showQuoteModal && (
           <motion.div 
