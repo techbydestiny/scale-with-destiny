@@ -354,7 +354,7 @@ const Hero = ({ onGetQuote }: { onGetQuote?: () => void }) => {
                     <div className="relative w-full h-[500px] md:h-[550px] lg:h-[600px] bg-gradient-to-br from-blue-800/50 to-indigo-900/50">
                       {!imageError ? (
                         <Image
-                          src="/images/hero-image.png"
+                          src="/images/hero-image.PNG"
                           alt="Business growth illustration showing global expansion and digital success"
                           width={600}
                           height={600}

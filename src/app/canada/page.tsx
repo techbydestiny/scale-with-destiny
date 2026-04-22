@@ -192,7 +192,7 @@ export default function CanadaPage() {
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Professional web design, SEO optimization, and business setup services for Canadian businesses 
+              Professional web designers for web design and developement, SEO optimization, and business setup services for Canadian businesses 
               in <strong className="text-white">Toronto, Vancouver, Montreal, Calgary, Ottawa</strong>, and across Canada.
               Bilingual support available in English and French.
             </p>
@@ -289,7 +289,7 @@ export default function CanadaPage() {
                 icon: <FaMobileAlt className="w-8 h-8" />,
                 title: 'Web Design Canada',
                 desc: 'Custom, responsive websites for Canadian businesses. Mobile-first design with bilingual support (English/French) and Canadian payment integration (Interac, Stripe).',
-                price: 'From $1,800 CAD',
+                price: 'From $500 CAD',
                 features: ['Mobile-Optimized', 'Fast Loading', 'SEO Ready', 'Bilingual Support', 'Interac Integration', 'SSL Security'],
                 popular: true
               },
@@ -297,7 +297,7 @@ export default function CanadaPage() {
                 icon: <FaChartLine className="w-8 h-8" />,
                 title: 'SEO Services Canada',
                 desc: 'Rank #1 on Google Canada searches. Local SEO, keyword research, and Google Business Profile optimization for Canadian businesses.',
-                price: 'From $850 CAD/mo',
+                price: 'From $300 CAD/mo',
                 features: ['Local SEO', 'Keyword Research', 'Google Maps', 'Monthly Reports', 'Competitor Analysis', 'Bilingual SEO'],
                 popular: false
               },
@@ -305,7 +305,7 @@ export default function CanadaPage() {
                 icon: <FaCheckCircle className="w-8 h-8" />,
                 title: 'Business Setup',
                 desc: 'Complete business manager setup, process documentation, and operational support for Canadian entrepreneurs.',
-                price: 'From $3,500 CAD',
+                price: 'From $2,000 CAD',
                 features: ['Business Tools', 'Process Setup', 'Team Training', 'Ongoing Support', 'Documentation', 'Growth Strategy'],
                 popular: false
               },

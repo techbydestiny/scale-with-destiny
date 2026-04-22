@@ -84,9 +84,9 @@ const localBusinessSchema = {
       { '@type': 'City', name: 'Hobart' }
     ]
   },
-  priceRange: '$1,600 - $8,000 AUD',
+  priceRange: '$500 - $2,000 AUD',
   currenciesAccepted: 'AUD',
-  paymentAccepted: ['Bank Transfer', 'Card Payment', 'Stripe', 'PayPal', 'Afterpay'],
+  paymentAccepted: ['Bank Transfer', 'Card Payment', 'Stripe'],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Australian Business Services',
@@ -142,14 +142,6 @@ const faqSchema = {
     },
     {
       '@type': 'Question',
-      name: 'Do you accept Afterpay?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes! We offer Afterpay as a payment option for Australian businesses, allowing you to spread payments over time.'
-      }
-    },
-    {
-      '@type': 'Question',
       name: 'Will my website show up on Google Australia?',
       acceptedAnswer: {
         '@type': 'Answer',
@@ -192,7 +184,7 @@ export default function AustraliaPage() {
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Professional web design, SEO optimization, and business setup services for Australian businesses 
+              Professional web designers for web design and developement, SEO optimization, and business setup services for Australian businesses 
               in <strong className="text-white">Sydney, Melbourne, Brisbane, Perth, Adelaide</strong>, and across Australia.
               Get found on Google and start getting more customers today.
             </p>
@@ -289,7 +281,7 @@ export default function AustraliaPage() {
                 icon: <FaMobileAlt className="w-8 h-8" />,
                 title: 'Web Design Australia',
                 desc: 'Custom, responsive websites for Australian businesses. Mobile-first design with Australian payment integration (Stripe, Afterpay, PayPal).',
-                price: 'From $1,600 AUD',
+                price: 'From $600 AUD',
                 features: ['Mobile-Optimized', 'Fast Loading', 'SEO Ready', 'Afterpay Integration', 'Australian Payment Gateway', 'SSL Security'],
                 popular: true
               },
@@ -297,7 +289,7 @@ export default function AustraliaPage() {
                 icon: <FaChartLine className="w-8 h-8" />,
                 title: 'SEO Services Australia',
                 desc: 'Rank #1 on Google Australia searches. Local SEO, keyword research, and Google Business Profile optimization for Australian businesses.',
-                price: 'From $800 AUD/mo',
+                price: 'From $300 AUD/mo',
                 features: ['Local SEO', 'Keyword Research', 'Google Maps', 'Monthly Reports', 'Competitor Analysis', 'Backlink Building'],
                 popular: false
               },
@@ -305,7 +297,7 @@ export default function AustraliaPage() {
                 icon: <FaCheckCircle className="w-8 h-8" />,
                 title: 'Business Setup',
                 desc: 'Complete business manager setup, process documentation, and operational support for Australian entrepreneurs.',
-                price: 'From $3,200 AUD',
+                price: 'From $2,000 AUD',
                 features: ['Business Tools', 'Process Setup', 'Team Training', 'Ongoing Support', 'Documentation', 'Growth Strategy'],
                 popular: false
               },
@@ -357,7 +349,6 @@ export default function AustraliaPage() {
               <div className="space-y-6">
                 {[
                   { title: 'Australian Market Expertise', desc: 'We understand the Australian market, customer behavior, and local competition across all states and territories.', icon: <FaUsers className="w-5 h-5" /> },
-                  { title: 'Afterpay Integration', desc: 'Seamless integration with Afterpay, Australia\'s most popular buy-now-pay-later service, plus Stripe and PayPal.', icon: <FaCheckCircle className="w-5 h-5" /> },
                   { title: 'Competitive Pricing in AUD', desc: 'Transparent pricing in Australian Dollars with no hidden fees. Flexible payment options for Australian businesses.', icon: <FaCheckCircle className="w-5 h-5" /> },
                   { title: 'Australian Business Hours Support', desc: 'Get support during Australian business hours across AEST, ACST, and AWST time zones.', icon: <FaClock className="w-5 h-5" /> },
                   { title: 'Google Business Experts', desc: 'We specialize in Google Business Profile optimization for Australian businesses, helping you show up on Google Maps.', icon: <FaGoogle className="w-5 h-5" /> },
@@ -512,7 +503,7 @@ export default function AustraliaPage() {
           </div>
           <div className="flex items-center justify-center gap-4 mt-8">
             <FaEnvelope className="text-white/80 w-5 h-5 ml-4" />
-            <span className="text-white/80 text-sm">hello@scalewithdestiny.com</span>
+            <span className="text-white/80 text-sm">hello@mail.scalewithdestiny.com</span>
           </div>
         </div>
       </section>

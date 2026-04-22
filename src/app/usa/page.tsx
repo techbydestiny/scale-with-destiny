@@ -192,7 +192,7 @@ export default function USAPage() {
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Professional web design, SEO optimization, and business setup services for US businesses 
+              Professional web designers for web design and developement, SEO optimization, and business setup services for US businesses 
               in <strong className="text-white">New York, Los Angeles, Chicago, Houston, Phoenix</strong>, and across America.
               Get found on Google and start getting more customers today.
             </p>
@@ -289,7 +289,7 @@ export default function USAPage() {
                 icon: <FaMobileAlt className="w-8 h-8" />,
                 title: 'Web Design USA',
                 desc: 'Custom, responsive websites for US businesses. Mobile-first design with US payment integration (Stripe, Square, PayPal).',
-                price: 'From $1,500',
+                price: 'From $500',
                 features: ['Mobile-Optimized', 'Fast Loading', 'SEO Ready', 'ADA Compliant', 'US Payment Gateway', 'SSL Security'],
                 popular: true
               },
@@ -297,7 +297,7 @@ export default function USAPage() {
                 icon: <FaChartLine className="w-8 h-8" />,
                 title: 'SEO Services USA',
                 desc: 'Rank #1 on Google US searches. Local SEO, keyword research, and Google Business Profile optimization for US businesses.',
-                price: 'From $900/mo',
+                price: 'From $300/mo',
                 features: ['Local SEO', 'Keyword Research', 'Google Maps', 'Monthly Reports', 'Competitor Analysis', 'Backlink Building'],
                 popular: false
               },
@@ -305,7 +305,7 @@ export default function USAPage() {
                 icon: <FaCheckCircle className="w-8 h-8" />,
                 title: 'Business Setup',
                 desc: 'Complete business manager setup, process documentation, and operational support for US entrepreneurs.',
-                price: 'From $3,000',
+                price: 'From $1,500',
                 features: ['Business Tools', 'Process Setup', 'Team Training', 'Ongoing Support', 'Documentation', 'Growth Strategy'],
                 popular: false
               },

@@ -190,7 +190,7 @@ export default function NigeriaPage() {
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Professional web design, SEO optimization, and business setup services tailored for Nigerian businesses 
+             Professional web designers for web design and developement, SEO optimization, and business setup services tailored for Nigerian businesses 
               in <strong className="text-white">Lagos, Abuja, Port Harcourt</strong>, and across the nation. 
               Get found on Google and start getting more customers today.
             </p>

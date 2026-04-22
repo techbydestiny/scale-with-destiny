@@ -190,7 +190,7 @@ export default function UnitedKingdomPage() {
               </span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Professional web design, SEO optimization, and business setup services for UK businesses 
+              Professional web designers for web design and developement, SEO optimization, and business setup services for UK businesses 
               in <strong className="text-white">London, Manchester, Birmingham, Edinburgh</strong>, and across the United Kingdom.
               Get found on Google and start getting more customers today.
             </p>
@@ -287,7 +287,7 @@ export default function UnitedKingdomPage() {
                 icon: <FaMobileAlt className="w-8 h-8" />,
                 title: 'Web Design UK',
                 desc: 'Custom, responsive websites for UK businesses. Mobile-first design with UK payment integration (Stripe, PayPal, Revolut).',
-                price: 'From £1,500',
+                price: 'From £400',
                 features: ['Mobile-Optimized', 'Fast Loading', 'SEO Ready', 'GDPR Compliant', 'UK Payment Gateway', 'SSL Security'],
                 popular: true
               },
@@ -295,7 +295,7 @@ export default function UnitedKingdomPage() {
                 icon: <FaChartLine className="w-8 h-8" />,
                 title: 'SEO Services UK',
                 desc: 'Rank #1 on Google UK searches. Local SEO, keyword research, and Google Business Profile optimization for UK businesses.',
-                price: 'From £800/mo',
+                price: 'From £200/mo',
                 features: ['Local SEO', 'Keyword Research', 'Google Maps', 'Monthly Reports', 'Competitor Analysis', 'Backlink Building'],
                 popular: false
               },
@@ -303,7 +303,7 @@ export default function UnitedKingdomPage() {
                 icon: <FaCheckCircle className="w-8 h-8" />,
                 title: 'Business Setup',
                 desc: 'Complete business manager setup, process documentation, and operational support for UK entrepreneurs.',
-                price: 'From £2,500',
+                price: 'From £1,500',
                 features: ['Business Tools', 'Process Setup', 'Team Training', 'Ongoing Support', 'Documentation', 'Growth Strategy'],
                 popular: false
               },
